@@ -19,7 +19,16 @@ public class EleventhApplication {
 @RestController
 class RestApiDemoController {
     private List<Item> items = new ArrayList<>();
+    public RestApiDemoController() {
+        items.addAll(List.of(
+                new Item("Macbook 14"),
+                new Item("Apple watch 4"),
+                new Item("iphone SE"),
+                new Item("ipad Air 3")
+        ));
+    }
 }
+
 
 class Item {
     private final String id;
