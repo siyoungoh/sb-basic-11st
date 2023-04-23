@@ -2,13 +2,11 @@ package com.shop.eleventh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -20,9 +18,9 @@ public class EleventhApplication {
 }
 
 @RestController
-@RequestMapping("/items")
+//@RequestMapping("/items")
 class RestApiDemoController {
-    private List<Item> items = new ArrayList<>();
+    private final List<Item> items = new ArrayList<>();
 
     public RestApiDemoController() {
         items.addAll(List.of(
@@ -33,12 +31,51 @@ class RestApiDemoController {
         ));
     }
 
-    @GetMapping
+    @GetMapping("/items")
     Iterable<Item> getItems() {
         return items;
     }
 
+    @GetMapping("/items/{id}")
+    Optional<Item> getItemById(@PathVariable String id) {
+        for (Item c : items) {
+            if (c.getId().equals(id)) {
+                return Optional.of(c);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    @PostMapping("/items")
+    Item postItem(@RequestBody Item item) {
+        items.add(item);
+        return item;
+    }
+
+    @PutMapping("/items/{id}")
+    Item putItem(@PathVariable String id,
+                 @RequestBody Item item) {
+        int itemIndex = -1;
+
+        for (Item c : items) {
+            if (c.getId().equals(id)) {
+                itemIndex = items.indexOf(c);
+                items.set(itemIndex, item);
+            }
+        }
+
+        return (itemIndex == -1) ?
+                postItem(item) : item;
+    }
+
+
+    @DeleteMapping("/items/{id}")
+    void deleteItem(@PathVariable String id) {
+        items.removeIf(c -> c.getId().equals(id));
+    }
 }
+
 
 class Item {
     private final String id;
