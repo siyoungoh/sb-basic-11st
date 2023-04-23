@@ -22,6 +22,7 @@ public class EleventhApplication {
 @RestController
 class RestApiDemoController {
     private List<Item> items = new ArrayList<>();
+
     public RestApiDemoController() {
         items.addAll(List.of(
                 new Item("Macbook 14"),
@@ -31,10 +32,11 @@ class RestApiDemoController {
         ));
     }
 
-    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    @GetMapping("/items")
     Iterable<Item> getItems() {
         return items;
     }
+
 }
 
 class Item {
