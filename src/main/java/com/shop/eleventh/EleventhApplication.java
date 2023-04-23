@@ -2,7 +2,10 @@ package com.shop.eleventh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -11,7 +14,11 @@ public class EleventhApplication {
     public static void main(String[] args) {
         SpringApplication.run(EleventhApplication.class, args);
     }
+}
 
+@RestController
+class RestApiDemoController {
+    private List<Item> items = new ArrayList<>();
 }
 
 class Item {
