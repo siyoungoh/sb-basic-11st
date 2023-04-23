@@ -2,6 +2,9 @@ package com.shop.eleventh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -27,8 +30,12 @@ class RestApiDemoController {
                 new Item("ipad Air 3")
         ));
     }
-}
 
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    Iterable<Item> getItems() {
+        return items;
+    }
+}
 
 class Item {
     private final String id;
