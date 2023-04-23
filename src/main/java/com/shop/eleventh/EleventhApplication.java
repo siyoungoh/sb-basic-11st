@@ -20,6 +20,7 @@ public class EleventhApplication {
 }
 
 @RestController
+@RequestMapping("/items")
 class RestApiDemoController {
     private List<Item> items = new ArrayList<>();
 
@@ -32,7 +33,7 @@ class RestApiDemoController {
         ));
     }
 
-    @GetMapping("/items")
+    @GetMapping
     Iterable<Item> getItems() {
         return items;
     }
